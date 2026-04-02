@@ -26,6 +26,7 @@ Singleton {
     property alias sidebar: adapter.sidebar
     property alias services: adapter.services
     property alias paths: adapter.paths
+    property alias touch: adapter.touch 
 
     property bool recentlySaved: false
 
@@ -55,7 +56,8 @@ Singleton {
             utilities: serializeUtilities(),
             sidebar: serializeSidebar(),
             services: serializeServices(),
-            paths: serializePaths()
+            paths: serializePaths(),
+            touch: serializeTouchs()
         };
     }
 
@@ -398,6 +400,33 @@ Singleton {
         };
     }
 
+    function serializeTouchs(): var {
+        let data = JSON.parse(JSON.stringify(root.touch || {}));
+
+         const defaultSettings = {
+            "dashboard": true,
+            "launcher": true,
+            "osd": true,
+            "utilities": true
+        };
+
+        for (let i = 0; i < Quickshell.screens.length; i++) {
+            let item = Quickshell.screens[i].name;
+            
+            let name = (typeof item === "string") ? item : (item.name || "Unknown");
+
+            if (!data[name]) {
+                data[name] = {
+                    "dashboard": true,
+                    "launcher": true,
+                    "osd": true,
+                    "utilities": true
+                };
+            }
+        }
+        return data;
+    }
+
     ElapsedTimer {
         id: timer
     }
@@ -456,6 +485,7 @@ Singleton {
         onLoaded: {
             try {
                 JSON.parse(text());
+                adapter.touch = root.serializeTouchs();
                 const elapsed = timer.elapsedMs();
                 // Only show toast for external changes (not our own saves) and when elapsed time is meaningful
                 if (adapter.utilities.toasts.configLoaded && !root.recentlySaved && elapsed > 0) { // qmllint disable unresolved-type
@@ -493,6 +523,7 @@ Singleton {
             property SidebarConfig sidebar: SidebarConfig {}
             property ServiceConfig services: ServiceConfig {}
             property UserPaths paths: UserPaths {}
+            property var touch: ({}) 
         }
     }
 }

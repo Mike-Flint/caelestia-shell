@@ -112,7 +112,7 @@ CustomMouseArea {
             const showOsd = inRightPanel(panels.osd, x, y);
 
             // Always update visibility based on hover if not in shortcut mode
-            if (!osdShortcutActive) {
+            if (!osdShortcutActive  && Config.touch[screen.name].osd) {
                 visibilities.osd = showOsd;
                 root.panels.osd.hovered = showOsd;
             } else if (showOsd) {
@@ -166,7 +166,7 @@ CustomMouseArea {
         }
 
         // Show launcher on hover, or show/hide on drag if hover is disabled
-        if (Config.launcher.showOnHover) {
+        if (Config.launcher.showOnHover && Config.touch[screen.name].launcher) {
             if (!visibilities.launcher && inBottomPanel(panels.launcher, x, y))
                 visibilities.launcher = true;
         } else if (pressed && inBottomPanel(panels.launcher, dragStart.x, dragStart.y) && withinPanelWidth(panels.launcher, x, y)) {
@@ -180,7 +180,7 @@ CustomMouseArea {
         const showDashboard = Config.dashboard.showOnHover && inTopPanel(panels.dashboard, x, y);
 
         // Always update visibility based on hover if not in shortcut mode
-        if (!dashboardShortcutActive) {
+        if (!dashboardShortcutActive && Config.touch[screen.name].dashboard) {
             visibilities.dashboard = showDashboard;
         } else if (showDashboard) {
             // If hovering over dashboard area while in shortcut mode, transition to hover control
@@ -199,7 +199,7 @@ CustomMouseArea {
         const showUtilities = inBottomPanel(panels.utilities, x, y, true);
 
         // Always update visibility based on hover if not in shortcut mode
-        if (!utilitiesShortcutActive) {
+        if (!utilitiesShortcutActive && Config.touch[screen.name].utilities) {
             visibilities.utilities = showUtilities;
         } else if (showUtilities) {
             // If hovering over utilities area while in shortcut mode, transition to hover control

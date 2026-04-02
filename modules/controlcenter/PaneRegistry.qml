@@ -53,6 +53,12 @@ QtObject {
             readonly property string label: "dashboard"
             readonly property string icon: "dashboard"
             readonly property string component: "dashboard/DashboardPane.qml"
+        },
+        QtObject {
+            readonly property string id: "touch"
+            readonly property string label: "touch"
+            readonly property string icon: "ads_click"
+            readonly property string component: "touch/TouchPane.qml"
         }
     ]
 
