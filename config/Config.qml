@@ -328,7 +328,7 @@ Singleton {
             const provider = {
                 displayName: p.displayName,
                 enabled: p.enabled,
-                iface: p.iface,
+                interface: p.interface,
                 name: p.name
             };
             if (p.connectCmd && p.connectCmd.length > 0) {
@@ -396,7 +396,9 @@ Singleton {
             wallpaperDir: paths.wallpaperDir,
             lyricsDir: paths.lyricsDir,
             sessionGif: paths.sessionGif,
-            mediaGif: paths.mediaGif
+            mediaGif: paths.mediaGif,
+            noNotifsPic: paths.noNotifsPic,
+            lockNoNotifsPic: paths.lockNoNotifsPic
         };
     }
 
